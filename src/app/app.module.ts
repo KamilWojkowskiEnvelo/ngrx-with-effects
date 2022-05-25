@@ -15,6 +15,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ListComponent } from './tasks/list/list.component';
+import { AppState } from './store/app.state';
+import { tasksReducer } from './store/tasks/tasks.reducer';
 
 const routes: Routes = [
   {
@@ -36,7 +38,9 @@ const routes: Routes = [
   declarations: [AppComponent, TasksComponent, ListComponent],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot<AppState>({
+      tasks: tasksReducer,
+    }),
     EffectsModule.forRoot([]),
     BrowserAnimationsModule,
     MatFormFieldModule,
