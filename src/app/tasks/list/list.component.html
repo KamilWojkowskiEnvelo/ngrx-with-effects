@@ -1,0 +1,8 @@
+<p>Lista tasków</p>
+<ng-container *ngIf="tasks$ | async as state">
+  <ol>
+    <li *ngFor="let task of state.results">
+      {{ task.name }} | {{ task.done ? "wykonany" : "do zrobienia" }}
+    </li>
+  </ol>
+</ng-container>

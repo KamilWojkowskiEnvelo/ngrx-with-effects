@@ -1,0 +1,56 @@
+<ng-container *ngIf="vm$ | async as vm">
+  Dodaj task
+  <ng-container *ngIf="vm.state.status === 'READY'; else loading">
+    <form [formGroup]="vm.form">
+      <ng-container formArrayName="tasks">
+        <div
+          *ngFor="
+            let taskGroup of tasksArrayControls;
+            let index = index;
+            let first = first
+          "
+          [formGroup]="taskGroup"
+        >
+          <mat-form-field>
+            <mat-label>zadanie</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+          <button
+            *ngIf="
+              taskGroup.controls['name'].value &&
+              taskGroup.controls['editMode'].value
+            "
+            mat-raised-button
+            color="primary"
+            (click)="save(taskGroup)"
+          >
+            <mat-icon>save</mat-icon>
+          </button>
+          <button
+            *ngIf="!taskGroup.controls['editMode'].value"
+            mat-raised-button
+            color="primary"
+            (click)="edit(taskGroup)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            *ngIf="!first"
+            (click)="remove(index, taskGroup)"
+            mat-raised-button
+            color="primary"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+    </form>
+    <button (click)="addNewTask()" mat-raised-button>
+      <span>Dodaj nowe</span><mat-icon>add</mat-icon>
+    </button>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <mat-spinner color="primary" diameter="30"></mat-spinner>
+</ng-template>

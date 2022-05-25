@@ -1,0 +1,19 @@
+{
+  "test": {
+    "ok": true
+  },
+  "tasks": [
+    {
+      "name": "Ogarnąć NgRX!",
+      "editMode": false,
+      "done": false,
+      "id": 1
+    },
+    {
+      "name": "dadadaada",
+      "editMode": false,
+      "done": false,
+      "id": 2
+    }
+  ]
+}
