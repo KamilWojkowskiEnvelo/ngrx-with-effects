@@ -16,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ListComponent } from './tasks/list/list.component';
 import { AppState } from './store/app.state';
-import { tasksReducer } from './store/tasks/tasks.reducer';
+import { tasksReducer } from './store/tasks';
+import { TasksEffects } from './store/tasks';
 
 const routes: Routes = [
   {
@@ -41,7 +42,7 @@ const routes: Routes = [
     StoreModule.forRoot<AppState>({
       tasks: tasksReducer,
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([TasksEffects]),
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,

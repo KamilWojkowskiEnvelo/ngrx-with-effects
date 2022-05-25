@@ -38,13 +38,7 @@ export class TasksService {
   }
 
   remove(taskId: number) {
-    this.store.dispatch(TasksActions.loading());
-
-    return this.http.delete(this.API_URL + `/tasks/${taskId}`).pipe(
-      tap(() => {
-        this.store.dispatch(TasksActions.remove({ taskId }));
-      })
-    );
+    return this.http.delete(this.API_URL + `/tasks/${taskId}`);
   }
 
   private getTasks() {

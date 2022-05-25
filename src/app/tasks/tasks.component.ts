@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { map, tap } from 'rxjs';
+import { AppState } from '../store/app.state';
+import { TasksActions } from '../store/tasks';
 import { Task, TasksService } from './tasks.service';
 
 @Component({
@@ -11,9 +14,6 @@ import { Task, TasksService } from './tasks.service';
 })
 export class TasksComponent implements OnInit {
   vm$ = this.service.tasks$.pipe(
-    tap((state) => {
-      console.log(state);
-    }),
     map((state) => ({
       state,
       form: new FormGroup({
@@ -31,7 +31,7 @@ export class TasksComponent implements OnInit {
 
   private form!: FormGroup;
 
-  constructor(private service: TasksService) {}
+  constructor(private service: TasksService, private store: Store<AppState>) {}
 
   public get tasksArray() {
     return this.form.controls['tasks'] as FormArray;
@@ -70,7 +70,9 @@ export class TasksComponent implements OnInit {
       this.tasksArray.removeAt(index);
 
       if (taskFormGroup.controls['id'].value) {
-        this.service.remove(taskFormGroup.controls['id'].value).subscribe();
+        this.store.dispatch(
+          TasksActions.remove({ taskId: taskFormGroup.controls['id'].value })
+        );
       }
     }
   }

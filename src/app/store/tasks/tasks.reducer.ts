@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { TasksApiAction } from './tasks-api.actions';
 import { TasksActions } from './tasks.actions';
 import { TasksState } from './tasks.state';
 
@@ -33,11 +34,25 @@ export const tasksReducer = createReducer(
       status: 'READY',
     };
   }),
-  on(TasksActions.remove, (state, { taskId }) => {
+  on(TasksActions.remove, (state) => {
+    return {
+      ...state,
+      error: null,
+      status: 'LOADING',
+    };
+  }),
+  on(TasksApiAction.taskRemoveSucceed, (state, { taskID }) => {
     return {
       ...state,
       status: 'READY',
-      results: state.results.filter((task) => task.id !== taskId),
+      results: state.results.filter((task) => task.id !== taskID),
+    };
+  }),
+  on(TasksApiAction.taskRemoveFailed, (state, { error }) => {
+    return {
+      ...state,
+      status: 'READY',
+      error,
     };
   }),
   on(TasksActions.loading, (state) => {
