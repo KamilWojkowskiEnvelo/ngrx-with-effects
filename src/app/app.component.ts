@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { TasksService } from './tasks/tasks.service';
 
 @Component({
@@ -10,12 +10,7 @@ import { TasksService } from './tasks/tasks.service';
 export class AppComponent {
   title = 'ngrx-with-effects';
 
-  tasksCount$ = this.service.tasks$.pipe(
-    tap((x) => {
-      console.log(x);
-    }),
-    map((state) => state.results.length)
-  );
+  tasksCount$ = this.service.tasks$.pipe(map((state) => state.results.length));
 
   constructor(private service: TasksService) {}
 }
